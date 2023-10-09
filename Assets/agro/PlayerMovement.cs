@@ -1,67 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.XR;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Transform _carTransform; // Reference to the car's main transform
+    [SerializeField] private Transform _carTransform;
     [SerializeField] private WheelCollider _wheel1;
     [SerializeField] private WheelCollider _wheel2;
-    [SerializeField] private WheelCollider _wheel3; // Rear left wheel collider
-    [SerializeField] private WheelCollider _wheel4; // Rear right wheel collider
+    [SerializeField] private WheelCollider _wheel3;
+    [SerializeField] private WheelCollider _wheel4;
 
-    [SerializeField] private float _motorTorque = 10000f; // Increased motor torque for faster movement
+    [SerializeField] private float _motorTorque = 10000f;
     [SerializeField] private float _maxAngle;
-    [SerializeField] private float _brakeTorque = 20000f; // Brake torque for stopping all wheels
+    [SerializeField] private float _brakeTorque = 20000f;
+
+    private bool isMoving; // Flag to track if the player is moving
 
     private void FixedUpdate()
     {
-        Move(); // Call the Move method to handle movement
+        // Detect Oculus Quest controller input
+        float triggerValue = 0f;
+        InputDevice device = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+        device.TryGetFeatureValue(CommonUsages.trigger, out triggerValue);
 
-        // Rotate left or right based on A and D keys
+        if (triggerValue > 0.1f)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        Move();
+
         if (Input.GetKey(KeyCode.A))
         {
-            RotateLeft(); // Rotate left if A key is pressed
+            RotateLeft();
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            RotateRight(); // Rotate right if D key is pressed
+            RotateRight();
         }
     }
 
     private void Move()
     {
-        float verticalInput = Input.GetAxis("Vertical"); // Get vertical input (W or S keys)
-        float horizontalInput = Input.GetAxis("Horizontal"); // Get horizontal input (A or D keys)
+        float verticalInput = isMoving ? 1f : 0f;
+        float horizontalInput = Input.GetAxis("Horizontal");
 
-        float flSpeed = verticalInput * _motorTorque; // Calculate front left wheel speed
-        float frSpeed = verticalInput * _motorTorque; // Calculate front right wheel speed
-        float rlSpeed = horizontalInput * _motorTorque; // Calculate rear left wheel speed
-        float rrSpeed = -horizontalInput * _motorTorque; // Calculate rear right wheel speed
+        float flSpeed = verticalInput * _motorTorque;
+        float frSpeed = verticalInput * _motorTorque;
+        float rlSpeed = horizontalInput * _motorTorque;
+        float rrSpeed = -horizontalInput * _motorTorque;
 
-        _wheel1.motorTorque = flSpeed; // Apply motor torque to front left wheel
-        _wheel2.motorTorque = frSpeed; // Apply motor torque to front right wheel
-        _wheel3.motorTorque = rlSpeed; // Apply motor torque to rear left wheel
-        _wheel4.motorTorque = rrSpeed; // Apply motor torque to rear right wheel
+        _wheel1.motorTorque = flSpeed;
+        _wheel2.motorTorque = frSpeed;
+        _wheel3.motorTorque = rlSpeed;
+        _wheel4.motorTorque = rrSpeed;
 
-        // Apply brake torque to all wheels if F key is pressed
         if (Input.GetKey(KeyCode.F))
         {
             ApplyBrakeTorque(_brakeTorque);
         }
         else
         {
-            // Release brakes
             ApplyBrakeTorque(0f);
         }
 
-        float steeringInput = Input.GetAxis("Horizontal"); // Get steering input (A or D keys)
-        ApplySteering(steeringInput); // Apply steering based on input
+        float steeringInput = Input.GetAxis("Horizontal");
+        ApplySteering(steeringInput);
     }
 
     private void ApplyBrakeTorque(float torque)
     {
-        // Apply brake torque to all wheels
         _wheel1.brakeTorque = torque;
         _wheel2.brakeTorque = torque;
         _wheel3.brakeTorque = torque;
@@ -70,29 +81,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotateLeft()
     {
-        // Rotate left logic here
-        _carTransform.Rotate(Vector3.up, -_maxAngle * Time.deltaTime); // Rotate the car to the left
+        _carTransform.Rotate(Vector3.up, -_maxAngle * Time.deltaTime);
     }
 
     private void RotateRight()
     {
-        // Rotate right logic here
-        _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime); // Rotate the car to the right
+        _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime);
     }
 
     private void ApplySteering(float steeringInput)
     {
-        float maxSpeed = Mathf.Max(_wheel1.rpm, _wheel2.rpm, _wheel3.rpm, _wheel4.rpm); // Calculate maximum wheel speed
-        float maxSteeringSpeed = Mathf.Abs(_maxAngle * Mathf.Deg2Rad * maxSpeed); // Calculate maximum steering speed
+        float maxSpeed = Mathf.Max(_wheel1.rpm, _wheel2.rpm, _wheel3.rpm, _wheel4.rpm);
+        float maxSteeringSpeed = Mathf.Abs(_maxAngle * Mathf.Deg2Rad * maxSpeed);
 
-        float flSteeringSpeed = maxSteeringSpeed * steeringInput; // Calculate front left steering speed
-        float frSteeringSpeed = maxSteeringSpeed * steeringInput; // Calculate front right steering speed
-        float rlSteeringSpeed = maxSteeringSpeed * steeringInput; // Calculate rear left steering speed
-        float rrSteeringSpeed = maxSteeringSpeed * steeringInput; // Calculate rear right steering speed
+        float flSteeringSpeed = maxSteeringSpeed * steeringInput;
+        float frSteeringSpeed = maxSteeringSpeed * steeringInput;
+        float rlSteeringSpeed = maxSteeringSpeed * steeringInput;
+        float rrSteeringSpeed = maxSteeringSpeed * steeringInput;
 
-        _wheel1.steerAngle = flSteeringSpeed; // Apply steering to front left wheel
-        _wheel2.steerAngle = frSteeringSpeed; // Apply steering to front right wheel
-        _wheel3.steerAngle = rlSteeringSpeed; // Apply steering to rear left wheel
-        _wheel4.steerAngle = rrSteeringSpeed; // Apply steering to rear right wheel
+        _wheel1.steerAngle = flSteeringSpeed;
+        _wheel2.steerAngle = frSteeringSpeed;
+        _wheel3.steerAngle = rlSteeringSpeed;
+        _wheel4.steerAngle = rrSteeringSpeed;
     }
 }
