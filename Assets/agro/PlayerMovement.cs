@@ -10,15 +10,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private WheelCollider _wheel3;
     [SerializeField] private WheelCollider _wheel4;
 
-    [SerializeField] private float _motorTorqueForward = 10000f;
-    [SerializeField] private float _motorTorqueBackward = -10000f;
+    [SerializeField] private float _motorTorque = 10000f;
     [SerializeField] private float _maxAngle;
     [SerializeField] private float _brakeTorque = 20000f;
 
     private bool isBButtonHeld = false;
     private float bButtonHoldTime = 0f;
     private float bButtonHoldDuration = 3f; // 3 seconds
-    private bool isMovingForward = true;
 
     private void FixedUpdate()
     {
@@ -32,8 +30,9 @@ public class PlayerMovement : MonoBehaviour
         leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
-        bool isMoving = (leftTriggerValue > 0.1f && rightTriggerValue > 0.1f) || 
-                        (isBButtonHeld && (leftTriggerValue > 0.1f || rightTriggerValue > 0.1f));
+        bool isMoving = leftTriggerValue > 0.1f && rightTriggerValue > 0.1f;
+        bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
+        bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
 
         Move(leftTriggerValue, rightTriggerValue, isMoving);
 
@@ -48,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Time.time - bButtonHoldTime >= bButtonHoldDuration)
             {
-                ToggleMovementDirection();
+                StartCoroutine(ToggleMovementDirection());
             }
         }
         else
@@ -56,16 +55,25 @@ public class PlayerMovement : MonoBehaviour
             isBButtonHeld = false;
             bButtonHoldTime = 0f;
         }
+
+        if (isRotatingLeft)
+        {
+            RotateLeft();
+        }
+        else if (isRotatingRight)
+        {
+            RotateRight();
+        }
     }
 
     private void Move(float leftTriggerValue, float rightTriggerValue, bool isMoving)
     {
         float triggerAverage = (leftTriggerValue + rightTriggerValue) / 2;
 
-        float verticalInput = isMoving ? (isMovingForward ? 1f : -1f) : 0f;
+        float verticalInput = isMoving ? 1f : 0f;
 
         float torqueModifier = Mathf.Lerp(0.2f, 1f, triggerAverage);
-        float motorTorque = isMovingForward ? _motorTorqueForward : _motorTorqueBackward;
+        float motorTorque = _motorTorque * torqueModifier;
 
         float flSpeed = verticalInput * motorTorque;
         float frSpeed = verticalInput * motorTorque;
@@ -114,8 +122,25 @@ public class PlayerMovement : MonoBehaviour
         _wheel4.steerAngle = rrSteeringSpeed;
     }
 
-    private void ToggleMovementDirection()
+    private void RotateLeft()
     {
-        isMovingForward = !isMovingForward;
+        _carTransform.Rotate(Vector3.up, -_maxAngle * Time.deltaTime);
+    }
+
+    private void RotateRight()
+    {
+        _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime);
+    }
+
+    private IEnumerator ToggleMovementDirection()
+    {
+        // Invert vertical input for movement
+        float temp = _motorTorque;
+        _motorTorque = -temp;
+
+        yield return new WaitForSeconds(bButtonHoldDuration);
+
+        // Reset the motor torque value to its original state
+        _motorTorque = temp;
     }
 }
