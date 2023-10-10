@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private WheelCollider _wheel3;
     [SerializeField] private WheelCollider _wheel4;
 
-    [SerializeField] private float _motorTorque = 10000f;
+    [SerializeField] private float _motorTorqueForward = 10000f;
+    [SerializeField] private float _motorTorqueBackward = -10000f;
     [SerializeField] private float _maxAngle;
     [SerializeField] private float _brakeTorque = 20000f;
 
@@ -31,9 +32,8 @@ public class PlayerMovement : MonoBehaviour
         leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
-        bool isMoving = leftTriggerValue > 0.1f && rightTriggerValue > 0.1f;
-        bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
-        bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
+        bool isMoving = (leftTriggerValue > 0.1f && rightTriggerValue > 0.1f) ||
+                        (isBButtonHeld && (leftTriggerValue > 0.1f || rightTriggerValue > 0.1f));
 
         Move(leftTriggerValue, rightTriggerValue, isMoving);
 
@@ -56,15 +56,6 @@ public class PlayerMovement : MonoBehaviour
             isBButtonHeld = false;
             bButtonHoldTime = 0f;
         }
-
-        if (isRotatingLeft)
-        {
-            RotateLeft();
-        }
-        else if (isRotatingRight)
-        {
-            RotateRight();
-        }
     }
 
     private void Move(float leftTriggerValue, float rightTriggerValue, bool isMoving)
@@ -74,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = isMoving ? (isMovingForward ? 1f : -1f) : 0f;
 
         float torqueModifier = Mathf.Lerp(0.2f, 1f, triggerAverage);
-        float motorTorque = _motorTorque * torqueModifier;
+        float motorTorque = isMovingForward ? _motorTorqueForward : _motorTorqueBackward;
 
         float flSpeed = verticalInput * motorTorque;
         float frSpeed = verticalInput * motorTorque;
@@ -121,16 +112,6 @@ public class PlayerMovement : MonoBehaviour
         _wheel2.steerAngle = frSteeringSpeed;
         _wheel3.steerAngle = rlSteeringSpeed;
         _wheel4.steerAngle = rrSteeringSpeed;
-    }
-
-    private void RotateLeft()
-    {
-        _carTransform.Rotate(Vector3.up, -_maxAngle * Time.deltaTime);
-    }
-
-    private void RotateRight()
-    {
-        _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime);
     }
 
     private void ToggleMovementDirection()
