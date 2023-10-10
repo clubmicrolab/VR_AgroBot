@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.XR;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private WheelCollider _wheel3;
     [SerializeField] private WheelCollider _wheel4;
 
-    [SerializeField] private float _motorTorque = 10000f; // Corrected variable name
+    [SerializeField] private float _motorTorque = 10000f;
     [SerializeField] private float _maxAngle;
     [SerializeField] private float _brakeTorque = 20000f;
+
+    private bool isBButtonHeld = false;
+    private float bButtonHoldTime = 0f;
+    private float bButtonHoldDuration = 3f; // 3 seconds
+    private bool isMovingForward = true;
 
     private void FixedUpdate()
     {
@@ -31,6 +37,26 @@ public class PlayerMovement : MonoBehaviour
 
         Move(leftTriggerValue, rightTriggerValue, isMoving);
 
+        // Check for B button input
+        if (Input.GetKey(KeyCode.B))
+        {
+            if (!isBButtonHeld)
+            {
+                isBButtonHeld = true;
+                bButtonHoldTime = Time.time;
+            }
+
+            if (Time.time - bButtonHoldTime >= bButtonHoldDuration)
+            {
+                ToggleMovementDirection();
+            }
+        }
+        else
+        {
+            isBButtonHeld = false;
+            bButtonHoldTime = 0f;
+        }
+
         if (isRotatingLeft)
         {
             RotateLeft();
@@ -43,13 +69,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move(float leftTriggerValue, float rightTriggerValue, bool isMoving)
     {
-        float triggerAverage = (leftTriggerValue + rightTriggerValue) / 2;  // Calculate the average trigger value
+        float triggerAverage = (leftTriggerValue + rightTriggerValue) / 2;
 
-        float verticalInput = isMoving ? 1f : 0f;
+        float verticalInput = isMoving ? (isMovingForward ? 1f : -1f) : 0f;
 
-        // Adjust motor torque based on trigger sensitivity
-        float torqueModifier = Mathf.Lerp(0.2f, 1f, triggerAverage);  // Modify these values to adjust sensitivity
-        float motorTorque = _motorTorque * torqueModifier; // Corrected variable name
+        float torqueModifier = Mathf.Lerp(0.2f, 1f, triggerAverage);
+        float motorTorque = _motorTorque * torqueModifier;
 
         float flSpeed = verticalInput * motorTorque;
         float frSpeed = verticalInput * motorTorque;
@@ -106,5 +131,10 @@ public class PlayerMovement : MonoBehaviour
     private void RotateRight()
     {
         _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime);
+    }
+
+    private void ToggleMovementDirection()
+    {
+        isMovingForward = !isMovingForward;
     }
 }
