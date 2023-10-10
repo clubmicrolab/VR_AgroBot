@@ -9,13 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private WheelCollider _wheel3;
     [SerializeField] private WheelCollider _wheel4;
 
-    [SerializeField] private float _motorTorque = 10000f;
+    [SerializeField] private float _motorTorque = 10000f; // Corrected variable name
     [SerializeField] private float _maxAngle;
     [SerializeField] private float _brakeTorque = 20000f;
-
-    private bool isMoving; // Flag to track if the player is moving
-    private bool isRotatingLeft; // Flag to track left rotation
-    private bool isRotatingRight; // Flag to track right rotation
 
     private void FixedUpdate()
     {
@@ -29,11 +25,11 @@ public class PlayerMovement : MonoBehaviour
         leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
-        isMoving = leftTriggerValue > 0.1f && rightTriggerValue > 0.1f;
-        isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
-        isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
+        bool isMoving = leftTriggerValue > 0.1f && rightTriggerValue > 0.1f;
+        bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
+        bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
 
-        Move();
+        Move(leftTriggerValue, rightTriggerValue, isMoving);
 
         if (isRotatingLeft)
         {
@@ -45,14 +41,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void Move(float leftTriggerValue, float rightTriggerValue, bool isMoving)
     {
+        float triggerAverage = (leftTriggerValue + rightTriggerValue) / 2;  // Calculate the average trigger value
+
         float verticalInput = isMoving ? 1f : 0f;
 
-        float flSpeed = verticalInput * _motorTorque;
-        float frSpeed = verticalInput * _motorTorque;
-        float rlSpeed = verticalInput * _motorTorque;
-        float rrSpeed = verticalInput * _motorTorque;
+        // Adjust motor torque based on trigger sensitivity
+        float torqueModifier = Mathf.Lerp(0.2f, 1f, triggerAverage);  // Modify these values to adjust sensitivity
+        float motorTorque = _motorTorque * torqueModifier; // Corrected variable name
+
+        float flSpeed = verticalInput * motorTorque;
+        float frSpeed = verticalInput * motorTorque;
+        float rlSpeed = verticalInput * motorTorque;
+        float rrSpeed = verticalInput * motorTorque;
 
         _wheel1.motorTorque = flSpeed;
         _wheel2.motorTorque = frSpeed;
