@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
-        bool isMoving = (leftTriggerValue > 0.1f && rightTriggerValue > 0.1f) ||
+        bool isMoving = (leftTriggerValue > 0.1f && rightTriggerValue > 0.1f) || 
                         (isBButtonHeld && (leftTriggerValue > 0.1f || rightTriggerValue > 0.1f));
 
         Move(leftTriggerValue, rightTriggerValue, isMoving);
