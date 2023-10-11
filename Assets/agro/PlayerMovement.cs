@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isBButtonHeld = false;
     private float bButtonHoldTime = 0f;
     private float bButtonHoldDuration = 3f; // 3 seconds
-    private bool isMovingForward = true;
+    private bool isMovingBackward = false;
 
     private void FixedUpdate()
     {
@@ -31,30 +31,15 @@ public class PlayerMovement : MonoBehaviour
         leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
-        bool isMoving = leftTriggerValue > 0.1f && rightTriggerValue > 0.1f;
         bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
         bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
 
-        Move(leftTriggerValue, rightTriggerValue, isMoving);
+        Move(leftTriggerValue, rightTriggerValue);
 
         // Check for B button input
         if (Input.GetKey(KeyCode.B))
         {
-            if (!isBButtonHeld)
-            {
-                isBButtonHeld = true;
-                bButtonHoldTime = Time.time;
-            }
-
-            if (Time.time - bButtonHoldTime >= bButtonHoldDuration)
-            {
-                ToggleMovementDirection();
-            }
-        }
-        else
-        {
-            isBButtonHeld = false;
-            bButtonHoldTime = 0f;
+            ToggleMovementDirection();
         }
 
         if (isRotatingLeft)
@@ -67,20 +52,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Move(float leftTriggerValue, float rightTriggerValue, bool isMoving)
+    private void Move(float leftTriggerValue, float rightTriggerValue)
     {
-        float triggerAverage = (leftTriggerValue + rightTriggerValue) / 2;
-
         // Determine the movement direction based on triggers
-        float verticalInput = isMoving ? (isMovingForward ? 1f : -1f) : 0f;
+        float verticalInput = 0f;
 
-        // Rest of the code remains unchanged
+        if (leftTriggerValue > 0.1f && rightTriggerValue > 0.1f)
+        {
+            // Both triggers pressed, enable backward movement
+            verticalInput = -1f;
+            isMovingBackward = true;
+        }
+        else if (leftTriggerValue > 0.1f || rightTriggerValue > 0.1f)
+        {
+            // Either trigger pressed, enable forward movement
+            verticalInput = 1f;
+            isMovingBackward = false;
+        }
 
         // Apply motor torque based on movement direction
         float flSpeed = verticalInput * _motorTorque;
         float frSpeed = verticalInput * _motorTorque;
         float rlSpeed = verticalInput * _motorTorque;
         float rrSpeed = verticalInput * _motorTorque;
+
+        if (isMovingBackward)
+        {
+            // Invert motor torque for backward movement
+            flSpeed *= -1f;
+            frSpeed *= -1f;
+            rlSpeed *= -1f;
+            rrSpeed *= -1f;
+        }
 
         _wheel1.motorTorque = flSpeed;
         _wheel2.motorTorque = frSpeed;
@@ -126,6 +129,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void ToggleMovementDirection()
     {
-        isMovingForward = !isMovingForward;
+        isMovingBackward = !isMovingBackward;
     }
 }
