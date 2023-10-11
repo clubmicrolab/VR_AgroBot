@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.XR;
-using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -31,16 +30,18 @@ public class PlayerMovement : MonoBehaviour
         leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
-        bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
-        bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
-
-        Move(leftTriggerValue, rightTriggerValue);
-
         // Check for B button input
         if (Input.GetKey(KeyCode.B))
         {
             ToggleMovementDirection();
         }
+
+        bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
+        bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
+
+        bool isMovingBackward = GetMovementDirection();
+
+        Move(leftTriggerValue, rightTriggerValue, isMovingBackward);
 
         if (isRotatingLeft)
         {
@@ -52,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Move(float leftTriggerValue, float rightTriggerValue)
+    private void Move(float leftTriggerValue, float rightTriggerValue, bool isMovingBackward)
     {
         // Determine the movement direction based on triggers
         float verticalInput = 0f;
@@ -89,8 +90,6 @@ public class PlayerMovement : MonoBehaviour
         _wheel2.motorTorque = frSpeed;
         _wheel3.motorTorque = rlSpeed;
         _wheel4.motorTorque = rrSpeed;
-
-        // Rest of the code remains unchanged
     }
 
     private void ApplyBrakeTorque(float torque)
@@ -130,5 +129,10 @@ public class PlayerMovement : MonoBehaviour
     private void ToggleMovementDirection()
     {
         isMovingBackward = !isMovingBackward;
+    }
+
+    private bool GetMovementDirection()
+    {
+        return isMovingBackward;
     }
 }
