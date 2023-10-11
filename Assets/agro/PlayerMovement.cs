@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.XR;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,80 +15,96 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _maxAngle;
     [SerializeField] private float _brakeTorque = 20000f;
 
-    private bool isBButtonHeld = false;
-    private float bButtonHoldTime = 0f;
-    private float bButtonHoldDuration = 3f; // 3 seconds
-    private bool isMovingBackward = false;
+    private XRNode leftControllerNode = XRNode.LeftHand;
+    private XRNode rightControllerNode = XRNode.RightHand;
 
     private void FixedUpdate()
     {
-        float leftTriggerValue = 0f;
-        float rightTriggerValue = 0f;
+        Move(); // Call the Move method to handle movement
 
-        InputDevice leftDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-        InputDevice rightDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+        // Rotate left or right based on input from Oculus controllers
+        float steeringInput = GetSteeringInput();
+        ApplySteering(steeringInput);
+    }
 
-        leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
-        rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
+    private void Move()
+    {
+        float verticalInput = GetVerticalInput(); // Get vertical input from Oculus controllers
+        float horizontalInput = GetHorizontalInput(); // Get horizontal input from Oculus controllers
 
-        if (Input.GetKey(KeyCode.B))
+        float flSpeed = verticalInput * _motorTorque; // Calculate front left wheel speed
+        float frSpeed = verticalInput * _motorTorque; // Calculate front right wheel speed
+        float rlSpeed = horizontalInput * _motorTorque; // Calculate rear left wheel speed
+        float rrSpeed = -horizontalInput * _motorTorque; // Calculate rear right wheel speed
+
+        _wheel1.motorTorque = flSpeed; // Apply motor torque to front left wheel
+        _wheel2.motorTorque = frSpeed; // Apply motor torque to front right wheel
+        _wheel3.motorTorque = rlSpeed; // Apply motor torque to rear left wheel
+        _wheel4.motorTorque = rrSpeed; // Apply motor torque to rear right wheel
+
+        // Apply brake torque to all wheels if a specific button on Oculus controllers is pressed
+        if (IsBrakeButtonPressed())
         {
-            ToggleMovementDirection();
+            ApplyBrakeTorque(_brakeTorque);
         }
-
-        bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
-        bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
-
-        bool isMovingBackward = GetMovementDirection();
-
-        Move(leftTriggerValue, rightTriggerValue, isMovingBackward);
-
-        if (isRotatingLeft)
+        else
         {
-            RotateLeft();
-        }
-        else if (isRotatingRight)
-        {
-            RotateRight();
+            // Release brakes
+            ApplyBrakeTorque(0f);
         }
     }
 
-    private void Move(float leftTriggerValue, float rightTriggerValue, bool isMovingBackward)
+    private float GetVerticalInput()
     {
+        // Get vertical input from Oculus controllers (e.g., thumbstick up/down)
         float verticalInput = 0f;
+        InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
+        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
 
-        if (leftTriggerValue > 0.1f && rightTriggerValue > 0.1f)
-        {
-            verticalInput = -1f;
-            isMovingBackward = true;
-        }
-        else if (leftTriggerValue > 0.1f || rightTriggerValue > 0.1f)
-        {
-            verticalInput = 1f;
-            isMovingBackward = false;
-        }
+        // Use the vertical component of the thumbstick value
+        verticalInput = thumbstickValue.y;
 
-        float flSpeed = verticalInput * _motorTorque;
-        float frSpeed = verticalInput * _motorTorque;
-        float rlSpeed = verticalInput * _motorTorque;
-        float rrSpeed = verticalInput * _motorTorque;
+        return verticalInput;
+    }
 
-        if (isMovingBackward)
-        {
-            flSpeed *= -1f;
-            frSpeed *= -1f;
-            rlSpeed *= -1f;
-            rrSpeed *= -1f;
-        }
+    private float GetHorizontalInput()
+    {
+        // Get horizontal input from Oculus controllers (e.g., thumbstick left/right)
+        float horizontalInput = 0f;
+        InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
+        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
 
-        _wheel1.motorTorque = flSpeed;
-        _wheel2.motorTorque = frSpeed;
-        _wheel3.motorTorque = rlSpeed;
-        _wheel4.motorTorque = rrSpeed;
+        // Use the horizontal component of the thumbstick value
+        horizontalInput = thumbstickValue.x;
+
+        return horizontalInput;
+    }
+
+    private bool IsBrakeButtonPressed()
+    {
+        // Check if a specific button on Oculus controllers (e.g., A or X) is pressed for braking
+        InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
+        bool isBrakeButtonPressed = false;
+        device.TryGetFeatureValue(CommonUsages.secondaryButton, out isBrakeButtonPressed);
+        return isBrakeButtonPressed;
+    }
+
+    private float GetSteeringInput()
+    {
+        // Get steering input from Oculus controllers (e.g., thumbstick left/right)
+        float steeringInput = 0f;
+        InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
+        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
+
+        // Use the horizontal component of the thumbstick value for steering
+        steeringInput = thumbstickValue.x;
+
+        return steeringInput;
     }
 
     private void ApplyBrakeTorque(float torque)
     {
+        // Apply brake torque to all wheels
         _wheel1.brakeTorque = torque;
         _wheel2.brakeTorque = torque;
         _wheel3.brakeTorque = torque;
@@ -107,25 +125,5 @@ public class PlayerMovement : MonoBehaviour
         _wheel2.steerAngle = frSteeringSpeed;
         _wheel3.steerAngle = rlSteeringSpeed;
         _wheel4.steerAngle = rrSteeringSpeed;
-    }
-
-    private void RotateLeft()
-    {
-        _carTransform.Rotate(Vector3.up, -_maxAngle * Time.deltaTime);
-    }
-
-    private void RotateRight()
-    {
-        _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime);
-    }
-
-    private void ToggleMovementDirection()
-    {
-        isMovingBackward = !isMovingBackward;
-    }
-
-    private bool GetMovementDirection()
-    {
-        return isMovingBackward;
     }
 }
