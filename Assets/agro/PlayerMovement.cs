@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private XRNode rightControllerNode = XRNode.RightHand;
 
     private bool _isMovingForward = true;
+    private bool _gearboxSwitched = false;
 
     private void FixedUpdate()
     {
@@ -31,12 +32,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        // Check for gearbox button press to toggle movement direction
-        if (IsGearboxButtonPressed())
-        {
-            _isMovingForward = !_isMovingForward; // Toggle movement direction
-        }
-
         float verticalInput = GetVerticalInput(); // Get vertical input from Oculus controllers
         float horizontalInput = GetHorizontalInput(); // Get horizontal input from Oculus controllers
 
@@ -76,21 +71,26 @@ public class PlayerMovement : MonoBehaviour
 
     private float GetVerticalInput()
     {
-        // Get vertical input from Oculus controllers (e.g., thumbstick up/down or primaryHandTrigger)
-        float verticalInput = 0f;
         float leftTriggerValue = GetTriggerInput(leftControllerNode);
         float rightTriggerValue = GetTriggerInput(rightControllerNode);
 
-        // Use the trigger input to control forward or backward movement
-        if (leftTriggerValue > 0 && rightTriggerValue > 0)
+        // Toggle movement direction when B button is pressed
+        if (IsGearboxButtonPressed())
         {
-            verticalInput = -1f; // Move backward when both triggers are pressed
+            _gearboxSwitched = !_gearboxSwitched;
         }
-        else
+
+        // Use the trigger input to control forward or backward movement
+        float verticalInput = (_gearboxSwitched) ? rightTriggerValue - leftTriggerValue : leftTriggerValue - rightTriggerValue;
+
+        // Adjust movement direction based on the gearbox switch
+        if (!_gearboxSwitched && leftTriggerValue > 0 && rightTriggerValue > 0)
         {
-            InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
-            device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
-            verticalInput = thumbstickValue.y; // Use thumbstick input for forward movement
+            _isMovingForward = true;
+        }
+        else if (_gearboxSwitched && leftTriggerValue > 0 && rightTriggerValue > 0)
+        {
+            _isMovingForward = false;
         }
 
         return verticalInput;
@@ -98,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float GetHorizontalInput()
     {
-        // Get horizontal input from Oculus controllers (e.g., thumbstick left/right)
         float horizontalInput = 0f;
         InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
         device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
@@ -111,7 +110,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsBrakeButtonPressed()
     {
-        // Check if a specific button on Oculus controllers (e.g., A or X) is pressed for braking
         InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
         bool isBrakeButtonPressed = false;
         device.TryGetFeatureValue(CommonUsages.secondaryButton, out isBrakeButtonPressed);
@@ -120,7 +118,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGearboxButtonPressed()
     {
-        // Check if the B button on Oculus controllers is pressed for changing movement
         InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
         bool isGearboxButtonPressed = false;
         device.TryGetFeatureValue(CommonUsages.primaryButton, out isGearboxButtonPressed);
@@ -133,6 +130,18 @@ public class PlayerMovement : MonoBehaviour
         InputDevice device = InputDevices.GetDeviceAtXRNode(controllerNode);
         device.TryGetFeatureValue(CommonUsages.trigger, out triggerValue);
         return triggerValue;
+    }
+
+    private float GetSteeringInput()
+    {
+        float steeringInput = 0f;
+        InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
+        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
+
+        // Use the horizontal component of the thumbstick value for steering
+        steeringInput = thumbstickValue.x;
+
+        return steeringInput;
     }
 
     private void ApplySteering(float steeringInput)
@@ -158,18 +167,5 @@ public class PlayerMovement : MonoBehaviour
         _wheel2.brakeTorque = torque;
         _wheel3.brakeTorque = torque;
         _wheel4.brakeTorque = torque;
-    }
-
-    private float GetSteeringInput()
-    {
-        // Get steering input from Oculus controllers (e.g., thumbstick left/right)
-        float steeringInput = 0f;
-        InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
-        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
-
-        // Use the horizontal component of the thumbstick value for steering
-        steeringInput = thumbstickValue.x;
-
-        return steeringInput;
     }
 }
