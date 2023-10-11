@@ -47,9 +47,10 @@ public class PlayerMovement : MonoBehaviour
         float torqueModifier = Mathf.Lerp(0.2f, 1f, triggerAverage);
         float motorTorque = _motorTorque * torqueModifier;
 
+        // Reverse the motor torque for backward movement
         if (isBButtonHeld)
         {
-            verticalInput *= -1f; // Reverse the movement
+            motorTorque *= -1f;
         }
 
         float flSpeed = verticalInput * motorTorque;
