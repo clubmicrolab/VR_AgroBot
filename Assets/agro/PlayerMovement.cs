@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private XRNode leftControllerNode = XRNode.LeftHand;
     private XRNode rightControllerNode = XRNode.RightHand;
 
+    private bool _isMovingForward = true;
+
     private void FixedUpdate()
     {
         Move(); // Call the Move method to handle movement
@@ -29,15 +31,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
+        // Check for gearbox button press to toggle movement direction
+        if (IsGearboxButtonPressed())
+        {
+            _isMovingForward = !_isMovingForward; // Toggle movement direction
+        }
+
         float verticalInput = GetVerticalInput(); // Get vertical input from Oculus controllers
         float horizontalInput = GetHorizontalInput(); // Get horizontal input from Oculus controllers
 
-        float flSpeed = verticalInput * _motorTorque; // Calculate front left wheel speed
-        float frSpeed = verticalInput * _motorTorque; // Calculate front right wheel speed
+        float flSpeed, frSpeed, rlSpeed, rrSpeed;
 
-        // Adjust rear wheel speeds for backward movement
-        float rlSpeed = horizontalInput < 0 ? -verticalInput * _motorTorque : 0f;
-        float rrSpeed = horizontalInput < 0 ? -verticalInput * _motorTorque : 0f;
+        if (_isMovingForward)
+        {
+            flSpeed = verticalInput * _motorTorque; // Calculate front left wheel speed
+            frSpeed = verticalInput * _motorTorque; // Calculate front right wheel speed
+            rlSpeed = horizontalInput * _motorTorque; // Calculate rear left wheel speed
+            rrSpeed = -horizontalInput * _motorTorque; // Calculate rear right wheel speed
+        }
+        else
+        {
+            flSpeed = -verticalInput * _motorTorque; // Calculate front left wheel speed for backward movement
+            frSpeed = -verticalInput * _motorTorque; // Calculate front right wheel speed for backward movement
+            rlSpeed = -horizontalInput * _motorTorque; // Calculate rear left wheel speed for backward movement
+            rrSpeed = horizontalInput * _motorTorque; // Calculate rear right wheel speed for backward movement
+        }
 
         _wheel1.motorTorque = flSpeed; // Apply motor torque to front left wheel
         _wheel2.motorTorque = frSpeed; // Apply motor torque to front right wheel
@@ -100,26 +118,21 @@ public class PlayerMovement : MonoBehaviour
         return isBrakeButtonPressed;
     }
 
-    private float GetSteeringInput()
+    private bool IsGearboxButtonPressed()
     {
-        // Get steering input from Oculus controllers (e.g., thumbstick left/right)
-        float steeringInput = 0f;
-        InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
-        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
-
-        // Use the horizontal component of the thumbstick value for steering
-        steeringInput = thumbstickValue.x;
-
-        return steeringInput;
+        // Check if the B button on Oculus controllers is pressed for changing movement
+        InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
+        bool isGearboxButtonPressed = false;
+        device.TryGetFeatureValue(CommonUsages.primaryButton, out isGearboxButtonPressed);
+        return isGearboxButtonPressed;
     }
 
-    private void ApplyBrakeTorque(float torque)
+    private float GetTriggerInput(XRNode controllerNode)
     {
-        // Apply brake torque to all wheels
-        _wheel1.brakeTorque = torque;
-        _wheel2.brakeTorque = torque;
-        _wheel3.brakeTorque = torque;
-        _wheel4.brakeTorque = torque;
+        float triggerValue = 0f;
+        InputDevice device = InputDevices.GetDeviceAtXRNode(controllerNode);
+        device.TryGetFeatureValue(CommonUsages.trigger, out triggerValue);
+        return triggerValue;
     }
 
     private void ApplySteering(float steeringInput)
@@ -138,11 +151,25 @@ public class PlayerMovement : MonoBehaviour
         _wheel4.steerAngle = rrSteeringSpeed;
     }
 
-    private float GetTriggerInput(XRNode controllerNode)
+    private void ApplyBrakeTorque(float torque)
     {
-        float triggerValue = 0f;
-        InputDevice device = InputDevices.GetDeviceAtXRNode(controllerNode);
-        device.TryGetFeatureValue(CommonUsages.trigger, out triggerValue);
-        return triggerValue;
+        // Apply brake torque to all wheels
+        _wheel1.brakeTorque = torque;
+        _wheel2.brakeTorque = torque;
+        _wheel3.brakeTorque = torque;
+        _wheel4.brakeTorque = torque;
+    }
+
+    private float GetSteeringInput()
+    {
+        // Get steering input from Oculus controllers (e.g., thumbstick left/right)
+        float steeringInput = 0f;
+        InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
+        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
+
+        // Use the horizontal component of the thumbstick value for steering
+        steeringInput = thumbstickValue.x;
+
+        return steeringInput;
     }
 }
