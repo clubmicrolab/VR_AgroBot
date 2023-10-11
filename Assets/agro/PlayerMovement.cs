@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Detect Oculus Quest controller input
         float leftTriggerValue = 0f;
         float rightTriggerValue = 0f;
 
@@ -30,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
         leftDevice.TryGetFeatureValue(CommonUsages.trigger, out leftTriggerValue);
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
-        // Check for B button input
         if (Input.GetKey(KeyCode.B))
         {
             ToggleMovementDirection();
@@ -55,23 +53,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move(float leftTriggerValue, float rightTriggerValue, bool isMovingBackward)
     {
-        // Determine the movement direction based on triggers
         float verticalInput = 0f;
 
         if (leftTriggerValue > 0.1f && rightTriggerValue > 0.1f)
         {
-            // Both triggers pressed, enable backward movement
             verticalInput = -1f;
             isMovingBackward = true;
         }
         else if (leftTriggerValue > 0.1f || rightTriggerValue > 0.1f)
         {
-            // Either trigger pressed, enable forward movement
             verticalInput = 1f;
             isMovingBackward = false;
         }
 
-        // Apply motor torque based on movement direction
         float flSpeed = verticalInput * _motorTorque;
         float frSpeed = verticalInput * _motorTorque;
         float rlSpeed = verticalInput * _motorTorque;
@@ -79,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (isMovingBackward)
         {
-            // Invert motor torque for backward movement
             flSpeed *= -1f;
             frSpeed *= -1f;
             rlSpeed *= -1f;
