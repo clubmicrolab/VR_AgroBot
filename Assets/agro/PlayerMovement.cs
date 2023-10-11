@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _brakeTorque = 20000f;
 
     [SerializeField] private bool _movementDirectionToggled = false;
+    [SerializeField] private string _movementDirection = "Forward"; // Indicator for movement direction
 
     private XRNode leftControllerNode = XRNode.LeftHand;
     private XRNode rightControllerNode = XRNode.RightHand;
@@ -69,6 +70,9 @@ public class PlayerMovement : MonoBehaviour
             // Release brakes
             ApplyBrakeTorque(0f);
         }
+
+        // Update the movement direction indicator
+        _movementDirection = (_isMovingForward) ? "Forward" : "Backward";
     }
 
     private float GetVerticalInput()
