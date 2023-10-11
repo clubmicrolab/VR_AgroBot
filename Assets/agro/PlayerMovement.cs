@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.XR;
 
 public class PlayerMovement : MonoBehaviour
@@ -18,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private XRNode leftControllerNode = XRNode.LeftHand;
     private XRNode rightControllerNode = XRNode.RightHand;
 
+    private bool isMovingBackward = false;
+
     private void FixedUpdate()
     {
         Move(); // Call the Move method to handle movement
@@ -25,6 +25,12 @@ public class PlayerMovement : MonoBehaviour
         // Rotate left or right based on input from Oculus controllers
         float steeringInput = GetSteeringInput();
         ApplySteering(steeringInput);
+
+        // Toggle movement direction when B button is pressed
+        if (IsBButtonPressed())
+        {
+            ToggleMovementDirection();
+        }
     }
 
     private void Move()
@@ -32,10 +38,33 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = GetVerticalInput(); // Get vertical input from Oculus controllers
         float horizontalInput = GetHorizontalInput(); // Get horizontal input from Oculus controllers
 
+        // Determine movement direction based on triggers
+        if (verticalInput > 0.1f && horizontalInput > 0.1f)
+        {
+            // Both triggers pressed, enable forward movement
+            verticalInput = 1f;
+            isMovingBackward = false;
+        }
+        else if (verticalInput > 0.1f || horizontalInput > 0.1f)
+        {
+            // Either trigger pressed, enable backward movement
+            verticalInput = -1f;
+            isMovingBackward = true;
+        }
+
         float flSpeed = verticalInput * _motorTorque; // Calculate front left wheel speed
         float frSpeed = verticalInput * _motorTorque; // Calculate front right wheel speed
         float rlSpeed = horizontalInput * _motorTorque; // Calculate rear left wheel speed
         float rrSpeed = -horizontalInput * _motorTorque; // Calculate rear right wheel speed
+
+        if (isMovingBackward)
+        {
+            // Invert motor torque for backward movement
+            flSpeed *= -1f;
+            frSpeed *= -1f;
+            rlSpeed *= -1f;
+            rrSpeed *= -1f;
+        }
 
         _wheel1.motorTorque = flSpeed; // Apply motor torque to front left wheel
         _wheel2.motorTorque = frSpeed; // Apply motor torque to front right wheel
@@ -56,14 +85,10 @@ public class PlayerMovement : MonoBehaviour
 
     private float GetVerticalInput()
     {
-        // Get vertical input from Oculus controllers (e.g., thumbstick up/down)
+        // Get vertical input from Oculus controllers (e.g., triggers)
         float verticalInput = 0f;
         InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
-        device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
-
-        // Use the vertical component of the thumbstick value
-        verticalInput = thumbstickValue.y;
-
+        device.TryGetFeatureValue(CommonUsages.trigger, out verticalInput);
         return verticalInput;
     }
 
@@ -91,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float GetSteeringInput()
     {
-        // Get steering input from Oculus controllers (e.g., thumbstick left/right)
         float steeringInput = 0f;
         InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
         device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 thumbstickValue);
@@ -100,6 +124,20 @@ public class PlayerMovement : MonoBehaviour
         steeringInput = thumbstickValue.x;
 
         return steeringInput;
+    }
+
+    private bool IsBButtonPressed()
+    {
+        // Check if the B button on Oculus controllers is pressed
+        InputDevice device = InputDevices.GetDeviceAtXRNode(rightControllerNode);
+        bool isBButtonPressed = false;
+        device.TryGetFeatureValue(CommonUsages.primaryButton, out isBButtonPressed);
+        return isBButtonPressed;
+    }
+
+    private void ToggleMovementDirection()
+    {
+        isMovingBackward = !isMovingBackward;
     }
 
     private void ApplyBrakeTorque(float torque)
