@@ -15,12 +15,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _brakeTorque = 20000f;
 
     private bool isBButtonHeld = false;
-    private float bButtonHoldTime = 0f;
-    private float bButtonHoldDuration = 3f; // 3 seconds
+    private int countdownValue = 3;
 
     private void FixedUpdate()
     {
-        // Detect Oculus Quest controller input
         float leftTriggerValue = 0f;
         float rightTriggerValue = 0f;
 
@@ -31,38 +29,12 @@ public class PlayerMovement : MonoBehaviour
         rightDevice.TryGetFeatureValue(CommonUsages.trigger, out rightTriggerValue);
 
         bool isMoving = leftTriggerValue > 0.1f && rightTriggerValue > 0.1f;
-        bool isRotatingLeft = leftTriggerValue > 0.1f && rightTriggerValue < 0.1f;
-        bool isRotatingRight = rightTriggerValue > 0.1f && leftTriggerValue < 0.1f;
 
         Move(leftTriggerValue, rightTriggerValue, isMoving);
 
-        // Check for B button input
-        if (Input.GetKey(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B) && isBButtonHeld)
         {
-            if (!isBButtonHeld)
-            {
-                isBButtonHeld = true;
-                bButtonHoldTime = Time.time;
-            }
-
-            if (Time.time - bButtonHoldTime >= bButtonHoldDuration)
-            {
-                StartCoroutine(ToggleMovementDirection());
-            }
-        }
-        else
-        {
-            isBButtonHeld = false;
-            bButtonHoldTime = 0f;
-        }
-
-        if (isRotatingLeft)
-        {
-            RotateLeft();
-        }
-        else if (isRotatingRight)
-        {
-            RotateRight();
+            StartCountdown();
         }
     }
 
@@ -74,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
 
         float torqueModifier = Mathf.Lerp(0.2f, 1f, triggerAverage);
         float motorTorque = _motorTorque * torqueModifier;
+
+        if (isBButtonHeld)
+        {
+            verticalInput *= -1f; // Reverse the movement
+        }
 
         float flSpeed = verticalInput * motorTorque;
         float frSpeed = verticalInput * motorTorque;
@@ -122,25 +99,27 @@ public class PlayerMovement : MonoBehaviour
         _wheel4.steerAngle = rrSteeringSpeed;
     }
 
-    private void RotateLeft()
+    private void ToggleMovementDirection()
     {
-        _carTransform.Rotate(Vector3.up, -_maxAngle * Time.deltaTime);
+        isBButtonHeld = !isBButtonHeld;
+
+        string mode = isBButtonHeld ? "reverse mode" : "normal mode";
+        Debug.Log("Switched to " + mode);
     }
 
-    private void RotateRight()
+    private void StartCountdown()
     {
-        _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime);
+        StartCoroutine(CountdownCoroutine());
     }
 
-    private IEnumerator ToggleMovementDirection()
+    private IEnumerator CountdownCoroutine()
     {
-        // Invert vertical input for movement
-        float temp = _motorTorque;
-        _motorTorque = -temp;
+        for (int i = countdownValue; i > 0; i--)
+        {
+            Debug.Log(i);
+            yield return new WaitForSeconds(1f);
+        }
 
-        yield return new WaitForSeconds(bButtonHoldDuration);
-
-        // Reset the motor torque value to its original state
-        _motorTorque = temp;
+        ToggleMovementDirection();
     }
 }
