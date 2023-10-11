@@ -15,13 +15,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _maxAngle;
     [SerializeField] private float _brakeTorque = 20000f;
 
-    [SerializeField] private bool _movementDirectionToggled = false;
-    [SerializeField] private string _movementDirection = "Forward"; // Indicator for movement direction
+    [SerializeField] private bool _isMovingForward = true; // Indicator for movement direction
 
     private XRNode leftControllerNode = XRNode.LeftHand;
     private XRNode rightControllerNode = XRNode.RightHand;
 
-    private bool _isMovingForward = true;
     private bool _isToggleButtonDown = false;
 
     private void FixedUpdate()
@@ -70,9 +68,6 @@ public class PlayerMovement : MonoBehaviour
             // Release brakes
             ApplyBrakeTorque(0f);
         }
-
-        // Update the movement direction indicator
-        _movementDirection = (_isMovingForward) ? "Forward" : "Backward";
     }
 
     private float GetVerticalInput()
@@ -84,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
         if (IsToggleButtonDown())
         {
             _isMovingForward = !_isMovingForward;
-            _movementDirectionToggled = true;
         }
 
         // Use the trigger input to control forward or backward movement
