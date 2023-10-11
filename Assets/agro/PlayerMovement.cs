@@ -15,11 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _maxAngle;
     [SerializeField] private float _brakeTorque = 20000f;
 
+    [SerializeField] private bool _movementDirectionToggled = false;
+
     private XRNode leftControllerNode = XRNode.LeftHand;
     private XRNode rightControllerNode = XRNode.RightHand;
 
     private bool _isMovingForward = true;
-    private bool _gearboxSwitched = false;
+    private bool _isToggleButtonDown = false;
 
     private void FixedUpdate()
     {
@@ -74,24 +76,15 @@ public class PlayerMovement : MonoBehaviour
         float leftTriggerValue = GetTriggerInput(leftControllerNode);
         float rightTriggerValue = GetTriggerInput(rightControllerNode);
 
-        // Toggle movement direction when B button is pressed
-        if (IsGearboxButtonPressed())
+        // Toggle movement direction when a specific button is pressed
+        if (IsToggleButtonDown())
         {
-            _gearboxSwitched = !_gearboxSwitched;
+            _isMovingForward = !_isMovingForward;
+            _movementDirectionToggled = true;
         }
 
         // Use the trigger input to control forward or backward movement
-        float verticalInput = (_gearboxSwitched) ? rightTriggerValue - leftTriggerValue : leftTriggerValue - rightTriggerValue;
-
-        // Adjust movement direction based on the gearbox switch
-        if (!_gearboxSwitched && leftTriggerValue > 0 && rightTriggerValue > 0)
-        {
-            _isMovingForward = true;
-        }
-        else if (_gearboxSwitched && leftTriggerValue > 0 && rightTriggerValue > 0)
-        {
-            _isMovingForward = false;
-        }
+        float verticalInput = (_isMovingForward) ? leftTriggerValue : -leftTriggerValue;
 
         return verticalInput;
     }
@@ -116,12 +109,13 @@ public class PlayerMovement : MonoBehaviour
         return isBrakeButtonPressed;
     }
 
-    private bool IsGearboxButtonPressed()
+    private bool IsToggleButtonDown()
     {
         InputDevice device = InputDevices.GetDeviceAtXRNode(leftControllerNode);
-        bool isGearboxButtonPressed = false;
-        device.TryGetFeatureValue(CommonUsages.primaryButton, out isGearboxButtonPressed);
-        return isGearboxButtonPressed;
+        bool isToggleButtonDown = false;
+        device.TryGetFeatureValue(CommonUsages.primaryButton, out isToggleButtonDown);
+        _isToggleButtonDown = isToggleButtonDown;
+        return isToggleButtonDown;
     }
 
     private float GetTriggerInput(XRNode controllerNode)
