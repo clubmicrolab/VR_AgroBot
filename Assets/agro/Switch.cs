@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Switch : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class Switch : MonoBehaviour
 
     void Update()
     {
-        // Check if Button B is pressed on the Oculus Quest 2 controller
-        if (Input.GetButtonDown("OculusBButton"))
+        // Check if the "Back" button (Button B) is pressed on the Oculus Quest 2 controller
+        if (Input.GetButtonDown("B_Button"))
         {
             // Toggle the active state of the scripts
             isPlayerMovement1Active = !isPlayerMovement1Active;
