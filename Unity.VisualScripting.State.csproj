@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{C2C1705A-BB2D-2500-5203-3B8D1EBABEB0}</ProjectGuid>
+    <ProjectGuid>{036A96FC-1AB6-719A-0B60-DD5FE20C4A73}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.VisualScripting.State</AssemblyName>
@@ -743,19 +743,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.VisualScripting.Core.csproj">
-      <Project>{5392F397-6A34-6FAB-8EF0-F0F348452D7F}</Project>
+      <Project>{BBDB8108-75CF-0737-3AC9-77C916F9DA4E}</Project>
       <Name>Unity.VisualScripting.Core</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Flow.csproj">
-      <Project>{47E070A6-8674-038C-7613-949E2766EA2B}</Project>
+      <Project>{ABE9BEB0-3FBA-0065-9969-9276DCF13586}</Project>
       <Name>Unity.VisualScripting.Flow</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{F4529D99-A009-C049-B431-75AEF2CF90ED}</Project>
+      <Project>{5DD87998-1A16-4D34-8F90-0B4D6EB3F961}</Project>
       <Name>UnityEditor.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{A86C07DC-DDE5-A438-331E-A69CF30C44D6}</Project>
+      <Project>{1CDDD634-EDAE-1CBC-865B-3C3EFE532458}</Project>
       <Name>UnityEngine.UI</Name>
     </ProjectReference>
   </ItemGroup>

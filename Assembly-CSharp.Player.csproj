@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{6BF4D9B5-4544-E2A3-A004-0DBB0348B5B8}</ProjectGuid>
+    <ProjectGuid>{2F27DBFC-B4C0-4A64-96FD-5601FFEB430A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -60,16 +60,20 @@
     <Compile Include="Assets\agro\Materials\GlobalAchievements.cs" />
     <Compile Include="Assets\agro\Materials\MMtogglers.cs" />
     <Compile Include="Assets\agro\CollectableSpawner.cs" />
+    <Compile Include="Assets\vrCamera.cs" />
     <Compile Include="Assets\agro\Materials\CameraController.cs" />
     <Compile Include="Assets\agro\Point.cs" />
-    <Compile Include="Assets\agro\PlayerMovement.cs" />
+    <Compile Include="Assets\agro\Switch.cs" />
     <Compile Include="Assets\agro\Vr\OculusRift.cs" />
     <Compile Include="Assets\agro\Materials\FullScreenMap.cs" />
     <Compile Include="Assets\agro\Materials\MarkerPlacer.cs" />
+    <Compile Include="Assets\agro\PlayerMovement2.cs" />
     <Compile Include="Assets\agro\Materials\CollectCube.cs" />
     <Compile Include="Assets\FollowCamera.cs" />
+    <Compile Include="Assets\agro\PlayerMovement1.cs" />
     <Compile Include="Assets\agro\ground.cs" />
     <Compile Include="Assets\agro\MiniMapController.cs" />
+    <Compile Include="Assets\Map\ObjectMover.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -668,67 +672,67 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.Timeline.Player.csproj">
-      <Project>{23933B88-625B-C607-7890-A6C89B73BC19}</Project>
+      <Project>{F6F7F9EB-7ED6-8D05-F0E0-3DB59CF8DE4D}</Project>
       <Name>Unity.Timeline.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
-      <Project>{E7BE182A-8441-A567-EAE0-B0BBA02F7477}</Project>
+      <Project>{CE24E410-29BF-CF12-32BF-4D19D467BB5C}</Project>
       <Name>Unity.TextMeshPro.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Interaction.Toolkit.Player.csproj">
-      <Project>{A59D6DD1-DB1F-E624-412B-DF1DD490D5CF}</Project>
+      <Project>{2DFE2A6F-AD80-9730-725F-6FBDAA81BAE4}</Project>
       <Name>Unity.XR.Interaction.Toolkit.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
-      <Project>{8DA211FE-86F6-9E3B-AB9E-E54C9FB1821C}</Project>
+      <Project>{72B9F15E-5A93-F932-8669-D71F3308E7F5}</Project>
       <Name>Unity.VisualScripting.Flow.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.Player.csproj">
-      <Project>{BD06472E-6B3A-130F-CAC6-94600FE17640}</Project>
+      <Project>{74A4E2E5-C4AC-7815-359C-1C4E1D72CC8A}</Project>
       <Name>Unity.InputSystem.Player</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
-      <Project>{1A36A117-CEF9-F59C-C214-F217CBA8F083}</Project>
+      <Project>{2272C300-3368-ADE8-E16D-9A5D9F3F0007}</Project>
       <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.SpatialTracking.Player.csproj">
-      <Project>{C31C7019-62E7-E610-A8FE-3AB5C754B6FC}</Project>
+      <Project>{266186D6-1958-81D3-5071-602F711E394E}</Project>
       <Name>UnityEngine.SpatialTracking.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Core.Player.csproj">
-      <Project>{6F15258D-7D88-6828-B30E-8A4E303288D9}</Project>
+      <Project>{391EDA71-8B7E-A8B3-B190-1E1BF2A299B5}</Project>
       <Name>Unity.VisualScripting.Core.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.Player.csproj">
-      <Project>{27501C23-D841-C7D5-F89D-15B4233D518C}</Project>
+      <Project>{89598AF3-F805-E1E5-67F9-C921BAF3FC11}</Project>
       <Name>Unity.Mathematics.Player</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.XR.LegacyInputHelpers.Player.csproj">
-      <Project>{C2FB5868-0B62-21FB-FA2B-9D9D154A2A52}</Project>
+      <Project>{740E64F2-A666-11B9-C4A4-3A0675E68D67}</Project>
       <Name>UnityEngine.XR.LegacyInputHelpers.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Player.csproj">
-      <Project>{1CED94B3-874D-F92D-B674-5AA62B7CD73B}</Project>
+      <Project>{7EB863BC-F437-7066-86D8-3CDF55225977}</Project>
       <Name>Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.CoreUtils.Player.csproj">
-      <Project>{5DC3489C-9541-AFE7-B465-97313C8E2371}</Project>
+      <Project>{2F363ED6-7115-2524-6AAE-F7211D53B491}</Project>
       <Name>Unity.XR.CoreUtils.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Management.Player.csproj">
-      <Project>{6716FD90-38A2-722E-0CB2-3AFA8E182E07}</Project>
+      <Project>{0A52FAFC-A442-7239-C8C0-C8B2AEEEBB5A}</Project>
       <Name>Unity.XR.Management.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Hands.Player.csproj">
-      <Project>{8C2E860F-42EC-287A-4DCC-715366C44FD0}</Project>
+      <Project>{265B2C61-DBAF-C30E-EEB2-B840848D0406}</Project>
       <Name>Unity.XR.Hands.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Oculus.Player.csproj">
-      <Project>{35D6340F-6429-AB6D-7606-76D164580C23}</Project>
+      <Project>{55D94BD6-E0C9-143F-18E1-90CDE05F0287}</Project>
       <Name>Unity.XR.Oculus.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.Player.csproj">
-      <Project>{E52EB1A9-A62A-5410-DC5E-B72A18FA5526}</Project>
+      <Project>{924D1651-8317-90B1-4F6E-BA56AF9F4BD0}</Project>
       <Name>Unity.VisualScripting.State.Player</Name>
     </ProjectReference>
   </ItemGroup>

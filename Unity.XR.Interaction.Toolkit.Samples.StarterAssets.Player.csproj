@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{1CED94B3-874D-F92D-B674-5AA62B7CD73B}</ProjectGuid>
+    <ProjectGuid>{7EB863BC-F437-7066-86D8-3CDF55225977}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.XR.Interaction.Toolkit.Samples.StarterAssets</AssemblyName>
@@ -639,23 +639,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.InputSystem.Player.csproj">
-      <Project>{BD06472E-6B3A-130F-CAC6-94600FE17640}</Project>
+      <Project>{74A4E2E5-C4AC-7815-359C-1C4E1D72CC8A}</Project>
       <Name>Unity.InputSystem.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.CoreUtils.Player.csproj">
-      <Project>{5DC3489C-9541-AFE7-B465-97313C8E2371}</Project>
+      <Project>{2F363ED6-7115-2524-6AAE-F7211D53B491}</Project>
       <Name>Unity.XR.CoreUtils.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Interaction.Toolkit.Player.csproj">
-      <Project>{A59D6DD1-DB1F-E624-412B-DF1DD490D5CF}</Project>
+      <Project>{2DFE2A6F-AD80-9730-725F-6FBDAA81BAE4}</Project>
       <Name>Unity.XR.Interaction.Toolkit.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.Player.csproj">
-      <Project>{27501C23-D841-C7D5-F89D-15B4233D518C}</Project>
+      <Project>{89598AF3-F805-E1E5-67F9-C921BAF3FC11}</Project>
       <Name>Unity.Mathematics.Player</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
-      <Project>{1A36A117-CEF9-F59C-C214-F217CBA8F083}</Project>
+      <Project>{2272C300-3368-ADE8-E16D-9A5D9F3F0007}</Project>
       <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
   </ItemGroup>
