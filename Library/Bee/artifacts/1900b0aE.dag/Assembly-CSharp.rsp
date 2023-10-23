@@ -367,6 +367,8 @@
 "Assets/agro/Collectable.cs"
 "Assets/agro/CollectableSpawner.cs"
 "Assets/agro/ground.cs"
+"Assets/agro/IcoMaterials/KeyboardMovement.cs"
+"Assets/agro/IcoMaterials/Markers/Markers.cs"
 "Assets/agro/Materials/CameraController.cs"
 "Assets/agro/Materials/CollectCube.cs"
 "Assets/agro/Materials/FullScreenMap.cs"
@@ -381,6 +383,7 @@
 "Assets/agro/Vr/OculusRift.cs"
 "Assets/FollowCamera.cs"
 "Assets/Map/ObjectMover.cs"
+"Assets/Map/ViewPoints.cs"
 "Assets/vrCamera.cs"
 -langversion:9.0
 
