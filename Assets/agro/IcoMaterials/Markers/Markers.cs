@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Markers : MonoBehaviour
@@ -12,11 +11,7 @@ public class Markers : MonoBehaviour
 
     private void Start()
     {
-        // Asigură-te că inițial toate obiectele sunt inactive (ascunse).
-        foreach (GameObject obj in objectsToToggle)
-        {
-            obj.SetActive(false);
-        }
+        SetAllObjectsActive(false); // Initially set all objects as inactive
     }
 
     private void Update()
@@ -25,25 +20,29 @@ public class Markers : MonoBehaviour
         {
             if (!allObjectsActive)
             {
-                // Activează următorul obiect în listă și dezactivează obiectul curent
-                objectsToToggle[currentIndex].SetActive(false);
-                currentIndex = (currentIndex + 1) % objectsToToggle.Count;
-                objectsToToggle[currentIndex].SetActive(true);
-
-                // Verifică dacă toate obiectele sunt active
-                allObjectsActive = currentIndex == 0;
+                ToggleObjects(); // Toggle visibility of objects
             }
             else
             {
-                // Resetarea procesului: dezactivează toate obiectele și activează primul
-                foreach (GameObject obj in objectsToToggle)
-                {
-                    obj.SetActive(false);
-                }
+                SetAllObjectsActive(false); // Deactivate all objects
                 currentIndex = 0;
-                objectsToToggle[currentIndex].SetActive(true);
                 allObjectsActive = false;
             }
+        }
+    }
+
+    private void ToggleObjects()
+    {
+        objectsToToggle[currentIndex].SetActive(true); // Activate the current object
+        currentIndex = (currentIndex + 1) % objectsToToggle.Count; // Move to the next object
+        allObjectsActive = currentIndex == 0; // Check if all objects are active
+    }
+
+    private void SetAllObjectsActive(bool active)
+    {
+        foreach (GameObject obj in objectsToToggle)
+        {
+            obj.SetActive(active);
         }
     }
 }
