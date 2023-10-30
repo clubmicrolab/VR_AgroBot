@@ -367,6 +367,7 @@
 "Assets/agro/Collectable.cs"
 "Assets/agro/CollectableSpawner.cs"
 "Assets/agro/ground.cs"
+"Assets/agro/IcoMaterials/AutoPilot.cs"
 "Assets/agro/IcoMaterials/KeyboardMovement.cs"
 "Assets/agro/IcoMaterials/Markers/Markers.cs"
 "Assets/agro/IcoMaterials/Markers/Placer.cs"

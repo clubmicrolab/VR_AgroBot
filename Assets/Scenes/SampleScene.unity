@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 57daba1a4d6e4044f9644e1939f2d288, type: 2}
 --- !u!1001 &18833105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -197,6 +197,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
       propertyPath: m_Name
       value: Tree (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
@@ -1817,6 +1825,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
       propertyPath: m_Name
       value: Tree (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
@@ -6933,6 +6949,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
 --- !u!4 &1121532607 stripped
@@ -7368,7 +7392,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1281401455
 BoxCollider:
@@ -7441,8 +7465,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1281401454}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -156.1973, y: -13.553215, z: 144.24289}
-  m_LocalScale: {x: 6287.7734, y: 1, z: 11447.571}
+  m_LocalPosition: {x: -156.1973, y: -13.553215, z: 144.24}
+  m_LocalScale: {x: 4638.0503, y: 1, z: 4729.6475}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1012246686}
@@ -8891,6 +8915,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
       propertyPath: m_Name
       value: Tree (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054509296875526081, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abfd54cc6d39d404daa7eaa4f34c04c5, type: 3}
@@ -10955,8 +10987,9 @@ GameObject:
   - component: {fileID: 7149467202324891044}
   - component: {fileID: 7149467202324891043}
   - component: {fileID: 7149467202324891045}
-  - component: {fileID: 7149467202324891047}
   - component: {fileID: 7149467202324891046}
+  - component: {fileID: 7149467202324891048}
+  - component: {fileID: 7149467202324891047}
   m_Layer: 7
   m_Name: Agrobot
   m_TagString: Untagged
@@ -11034,19 +11067,35 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7149467202324891041}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522aaef7423ac8f43b51f552fa1918dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f4ae986d3dea1743b084984906fa6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 8724512693504840815}
-  - {fileID: 1798027701}
-  - {fileID: 1758235435}
-  - {fileID: 1730736330}
-  moveSpeed: 20
-  distanceThreshold: 0.1
-  raycastDistance: 0.5
+  enemy: {fileID: 2129690200228468378}
+  target: {fileID: 8724512693504840815}
+--- !u!195 &7149467202324891048
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149467202324891041}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 9.072512
+  m_Speed: 4
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 6.9348454
+  m_BaseOffset: 5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7433816858680211512
 GameObject:
   m_ObjectHideFlags: 0
