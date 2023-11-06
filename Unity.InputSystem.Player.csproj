@@ -353,8 +353,8 @@
     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Plugins\XInput\IXboxOneRumble.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Plugins\XInput\XboxGamepadMacOS.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Editor\ControlPicker\InputControlPickerDropdown.cs" />
-    <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Events\InputEventStream.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Editor\InputLayoutCodeGenerator.cs" />
+    <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Events\InputEventStream.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Plugins\Users\InputUserChange.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Plugins\UI\ExtendedPointerEventData.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.5.1\InputSystem\Plugins\Android\AndroidKeyCode.cs" />

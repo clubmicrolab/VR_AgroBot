@@ -60,9 +60,10 @@
     <Compile Include="Assets\agro\Materials\GlobalAchievements.cs" />
     <Compile Include="Assets\agro\Materials\MMtogglers.cs" />
     <Compile Include="Assets\agro\CollectableSpawner.cs" />
-    <Compile Include="Assets\vrCamera.cs" />
+    <Compile Include="Assets\agro\vrCamera.cs" />
     <Compile Include="Assets\agro\Materials\CameraController.cs" />
     <Compile Include="Assets\agro\Switch.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\AutoPilot.cs" />
     <Compile Include="Assets\agro\Vr\OculusRift.cs" />
     <Compile Include="Assets\agro\Materials\FullScreenMap.cs" />
     <Compile Include="Assets\agro\Materials\MarkerPlacer.cs" />
@@ -73,11 +74,11 @@
     <Compile Include="Assets\agro\IcoMaterials\Markers\Placer.cs" />
     <Compile Include="Assets\agro\Materials\CollectCube.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Markers.cs" />
-    <Compile Include="Assets\FollowCamera.cs" />
+    <Compile Include="Assets\agro\FollowCamera.cs" />
     <Compile Include="Assets\agro\PlayerMovement1.cs" />
     <Compile Include="Assets\agro\ground.cs" />
     <Compile Include="Assets\agro\MiniMapController.cs" />
-    <Compile Include="Assets\agro\IcoMaterials\AutoPilot.cs" />
+    <Compile Include="Assets\agro\Health Bar\ChargeStation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -695,6 +696,10 @@
       <Project>{74A4E2E5-C4AC-7815-359C-1C4E1D72CC8A}</Project>
       <Name>Unity.InputSystem.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Autodesk.Fbx.Player.csproj">
+      <Project>{A3E39587-B5ED-36A9-1F34-347C7E9B4440}</Project>
+      <Name>Autodesk.Fbx.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
       <Project>{2272C300-3368-ADE8-E16D-9A5D9F3F0007}</Project>
       <Name>UnityEngine.UI.Player</Name>
@@ -718,6 +723,10 @@
     <ProjectReference Include="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Player.csproj">
       <Project>{7EB863BC-F437-7066-86D8-3CDF55225977}</Project>
       <Name>Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Formats.Fbx.Runtime.Player.csproj">
+      <Project>{9D978BC2-3F38-1F17-6897-A0AFCC045984}</Project>
+      <Name>Unity.Formats.Fbx.Runtime.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.CoreUtils.Player.csproj">
       <Project>{2F363ED6-7115-2524-6AAE-F7211D53B491}</Project>

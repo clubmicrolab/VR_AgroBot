@@ -323,7 +323,11 @@
 -r:"T:/unity/2021.3.24f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
 -r:"T:/unity/2021.3.24f1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
 -r:"T:/unity/2021.3.24f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Autodesk.Fbx.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Autodesk.Fbx.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.EditorCoroutines.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Formats.Fbx.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Formats.Fbx.Runtime.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.ref.dll"
@@ -366,7 +370,9 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.XR.LegacyInputHelpers.ref.dll"
 "Assets/agro/Collectable.cs"
 "Assets/agro/CollectableSpawner.cs"
+"Assets/agro/FollowCamera.cs"
 "Assets/agro/ground.cs"
+"Assets/agro/Health Bar/ChargeStation.cs"
 "Assets/agro/IcoMaterials/AutoPilot.cs"
 "Assets/agro/IcoMaterials/KeyboardMovement.cs"
 "Assets/agro/IcoMaterials/Markers/Markers.cs"
@@ -382,10 +388,9 @@
 "Assets/agro/PlayerMovement2.cs"
 "Assets/agro/Switch.cs"
 "Assets/agro/Vr/OculusRift.cs"
-"Assets/FollowCamera.cs"
+"Assets/agro/vrCamera.cs"
 "Assets/Map/ObjectMover.cs"
 "Assets/Map/ViewPoints.cs"
-"Assets/vrCamera.cs"
 -langversion:9.0
 
 /deterministic

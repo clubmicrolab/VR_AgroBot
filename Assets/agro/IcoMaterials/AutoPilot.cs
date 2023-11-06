@@ -6,30 +6,46 @@ using UnityEngine.AI;
 public class AutoPilot : MonoBehaviour
 {
     [SerializeField]
-    private Transform enemy; // The enemy to move
+    private Transform Agrobot;
 
     [SerializeField]
-    private Transform target; // The target (player) for the enemy to follow
-
+    private List<Transform> markers;
     private NavMeshAgent nav;
+    private int currentMarkerIndex = 0; 
 
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
 
-        if (target == null)
+        if (markers.Count == 0)
         {
-            // If the target is not set, find it by tag
-            target = GameObject.FindGameObjectWithTag("Player").transform;
+            GameObject[] markerObjects = GameObject.FindGameObjectsWithTag("Marker");
+            foreach (GameObject markerObject in markerObjects)
+            {
+                markers.Add(markerObject.transform);
+            }
         }
+
+        SetNextDestination(); 
     }
 
     void Update()
     {
-        if (enemy != null && target != null)
+        if (Agrobot != null && markers.Count > 0)
         {
-            // Set the enemy's destination to the target (player) position
-            nav.destination = target.position;
+            if (!nav.pathPending && nav.remainingDistance < 0.1f)
+            {
+                SetNextDestination();
+            }
+        }
+    }
+
+    void SetNextDestination()
+    {
+        if (markers.Count > 0)
+        {
+            nav.destination = markers[currentMarkerIndex].position;
+            currentMarkerIndex = (currentMarkerIndex + 1) % markers.Count;
         }
     }
 }
