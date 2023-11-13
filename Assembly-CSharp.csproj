@@ -60,6 +60,7 @@
     <Compile Include="Assets\agro\Materials\GlobalAchievements.cs" />
     <Compile Include="Assets\agro\Materials\MMtogglers.cs" />
     <Compile Include="Assets\agro\CollectableSpawner.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\HealthBarControl.cs" />
     <Compile Include="Assets\agro\vrCamera.cs" />
     <Compile Include="Assets\agro\Materials\CameraController.cs" />
     <Compile Include="Assets\agro\Switch.cs" />
@@ -67,18 +68,21 @@
     <Compile Include="Assets\agro\Vr\OculusRift.cs" />
     <Compile Include="Assets\agro\Materials\FullScreenMap.cs" />
     <Compile Include="Assets\agro\Materials\MarkerPlacer.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\Detector.cs" />
     <Compile Include="Assets\Map\ViewPoints.cs" />
     <Compile Include="Assets\agro\IcoMaterials\KeyboardMovement.cs" />
     <Compile Include="Assets\Map\ObjectMover.cs" />
     <Compile Include="Assets\agro\PlayerMovement2.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Placer.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\Charge.cs" />
     <Compile Include="Assets\agro\Materials\CollectCube.cs" />
+    <Compile Include="Assets\agro\Health Bar\ChargeStation.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Markers.cs" />
     <Compile Include="Assets\agro\FollowCamera.cs" />
     <Compile Include="Assets\agro\PlayerMovement1.cs" />
     <Compile Include="Assets\agro\ground.cs" />
     <Compile Include="Assets\agro\MiniMapController.cs" />
-    <Compile Include="Assets\agro\Health Bar\ChargeStation.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\Clickable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
