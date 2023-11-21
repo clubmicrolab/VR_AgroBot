@@ -68,11 +68,13 @@
     <Compile Include="Assets\agro\Vr\OculusRift.cs" />
     <Compile Include="Assets\agro\Materials\FullScreenMap.cs" />
     <Compile Include="Assets\agro\Materials\MarkerPlacer.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\Clickable.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Detector.cs" />
     <Compile Include="Assets\Map\ViewPoints.cs" />
     <Compile Include="Assets\agro\IcoMaterials\KeyboardMovement.cs" />
     <Compile Include="Assets\Map\ObjectMover.cs" />
     <Compile Include="Assets\agro\PlayerMovement2.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\Clickable2.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Placer.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Charge.cs" />
     <Compile Include="Assets\agro\Materials\CollectCube.cs" />
@@ -82,7 +84,7 @@
     <Compile Include="Assets\agro\PlayerMovement1.cs" />
     <Compile Include="Assets\agro\ground.cs" />
     <Compile Include="Assets\agro\MiniMapController.cs" />
-    <Compile Include="Assets\agro\IcoMaterials\Markers\Clickable.cs" />
+    <Compile Include="Assets\agro\ObjectDetector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

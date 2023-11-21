@@ -16,8 +16,8 @@ public class Clickable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check for left mouse button click
-        if (Input.GetMouseButtonDown(0))
+        // Check for key press (1 key)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ActivateChargeStation();
         }
