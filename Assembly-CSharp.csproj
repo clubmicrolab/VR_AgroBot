@@ -83,8 +83,9 @@
     <Compile Include="Assets\agro\FollowCamera.cs" />
     <Compile Include="Assets\agro\PlayerMovement1.cs" />
     <Compile Include="Assets\agro\ground.cs" />
-    <Compile Include="Assets\agro\MiniMapController.cs" />
     <Compile Include="Assets\agro\ObjectDetector.cs" />
+    <Compile Include="Assets\agro\MiniMapController.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\RestrictYAxis.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

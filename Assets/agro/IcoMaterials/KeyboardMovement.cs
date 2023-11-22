@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class KeyboardMovement : MonoBehaviour
 {
-    [SerializeField] private Transform _carTransform; // Reference to the car's main transform
+    [SerializeField] private Transform _carTransform;
     [SerializeField] private WheelCollider _colliderFL;
     [SerializeField] private WheelCollider _colliderFR;
-    [SerializeField] private WheelCollider _colliderRL; // Rear left wheel collider
-    [SerializeField] private WheelCollider _colliderRR; // Rear right wheel collider
+    [SerializeField] private WheelCollider _colliderRL;
+    [SerializeField] private WheelCollider _colliderRR;
 
-    [SerializeField] private float _force = 10000f; // Increased force for faster movement
+    [SerializeField] private float _force = 10000f;
     [SerializeField] private float _maxAngle;
-    [SerializeField] private float _brakeTorque = 20000f; // Brake torque for stopping all wheels
+    [SerializeField] private float _brakeTorque = 20000f;
 
     private void FixedUpdate()
     {
@@ -34,15 +34,13 @@ public class KeyboardMovement : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
 
-        float flSpeed = verticalInput * _force;
-        float frSpeed = verticalInput * _force;
-        float rlSpeed = horizontalInput * _force;
-        float rrSpeed = -horizontalInput * _force;
+        float speed = verticalInput * _force;
+        float steering = horizontalInput * _maxAngle;
 
-        _colliderFL.motorTorque = flSpeed;
-        _colliderFR.motorTorque = frSpeed;
-        _colliderRL.motorTorque = rlSpeed;
-        _colliderRR.motorTorque = rrSpeed;
+        _colliderFL.motorTorque = speed;
+        _colliderFR.motorTorque = speed;
+        _colliderRL.motorTorque = -steering;
+        _colliderRR.motorTorque = steering;
 
         // Apply brake torque to all wheels
         if (Input.GetKey(KeyCode.Space))
@@ -55,8 +53,7 @@ public class KeyboardMovement : MonoBehaviour
             ApplyBrakeTorque(0f);
         }
 
-        float steeringInput = Input.GetAxis("Horizontal");
-        ApplySteering(steeringInput);
+        ApplySteering(horizontalInput);
     }
 
     private void ApplyBrakeTorque(float torque)
@@ -82,18 +79,13 @@ public class KeyboardMovement : MonoBehaviour
 
     private void ApplySteering(float steeringInput)
     {
-        float maxSpeed = Mathf.Max(_colliderFL.rpm, _colliderFR.rpm, _colliderRL.rpm, _colliderRR.rpm);
-        float maxSteeringSpeed = Mathf.Abs(_maxAngle * Mathf.Deg2Rad * maxSpeed);
+        float maxSteerAngle = 30f; // Adjust the maximum steering angle as needed
 
-        float flSteeringSpeed = maxSteeringSpeed * steeringInput;
-        float frSteeringSpeed = maxSteeringSpeed * steeringInput;
-        float rlSteeringSpeed = maxSteeringSpeed * steeringInput;
-        float rrSteeringSpeed = maxSteeringSpeed * steeringInput;
+        float steerAngle = maxSteerAngle * steeringInput;
 
-        _colliderFL.steerAngle = flSteeringSpeed;
-        _colliderFR.steerAngle = frSteeringSpeed;
-        _colliderRL.steerAngle = rlSteeringSpeed;
-        _colliderRR.steerAngle = rrSteeringSpeed;
+        _colliderFL.steerAngle = steerAngle;
+        _colliderFR.steerAngle = steerAngle;
+        _colliderRL.steerAngle = steerAngle;
+        _colliderRR.steerAngle = steerAngle;
     }
 }
-

@@ -382,6 +382,7 @@
 "Assets/agro/IcoMaterials/Markers/HealthBarControl.cs"
 "Assets/agro/IcoMaterials/Markers/Markers.cs"
 "Assets/agro/IcoMaterials/Markers/Placer.cs"
+"Assets/agro/IcoMaterials/RestrictYAxis.cs"
 "Assets/agro/Materials/CameraController.cs"
 "Assets/agro/Materials/CollectCube.cs"
 "Assets/agro/Materials/FullScreenMap.cs"
