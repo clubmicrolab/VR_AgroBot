@@ -17,8 +17,8 @@ public class Clickable2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check for key press (2 key)
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        // Check for key press (3 key)
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ActivateAutoPilot();
         }

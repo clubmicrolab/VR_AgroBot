@@ -61,8 +61,10 @@
     <Compile Include="Assets\agro\Materials\MMtogglers.cs" />
     <Compile Include="Assets\agro\CollectableSpawner.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\HealthBarControl.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\VRControl.cs" />
     <Compile Include="Assets\agro\vrCamera.cs" />
     <Compile Include="Assets\agro\Materials\CameraController.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\RestrictYAxis.cs" />
     <Compile Include="Assets\agro\Switch.cs" />
     <Compile Include="Assets\agro\IcoMaterials\AutoPilot.cs" />
     <Compile Include="Assets\agro\Vr\OculusRift.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Assets\agro\Materials\MarkerPlacer.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Clickable.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Detector.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\KeyboardControl.cs" />
     <Compile Include="Assets\Map\ViewPoints.cs" />
     <Compile Include="Assets\agro\IcoMaterials\KeyboardMovement.cs" />
     <Compile Include="Assets\Map\ObjectMover.cs" />
@@ -85,7 +88,9 @@
     <Compile Include="Assets\agro\ground.cs" />
     <Compile Include="Assets\agro\ObjectDetector.cs" />
     <Compile Include="Assets\agro\MiniMapController.cs" />
-    <Compile Include="Assets\agro\IcoMaterials\RestrictYAxis.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\AutoPilotControl.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\ChargeControl.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\ChargeScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
