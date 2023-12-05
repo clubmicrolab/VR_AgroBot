@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Rigidbody))] // Add this line to require a Rigidbody component
 public class ChargeStation : MonoBehaviour
 {
-    [SerializeField]
-    private Transform Agrobot;
-
-    [SerializeField]
-    private List<Transform> markers;
+    [SerializeField] private Transform Agrobot;
+    [SerializeField] private List<Transform> markers;
     private NavMeshAgent nav;
+    private Rigidbody rb; // Reference to the Rigidbody component
     private int currentMarkerIndex = 0;
     private bool hasReachedDestination = false;
     private bool isWaiting = false;
-    private float waitTime = 5.0f; 
+    private float waitTime = 5.0f;
 
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>(); // Get the Rigidbody component
 
         if (markers.Count == 0)
         {

@@ -53,14 +53,13 @@
     <UnityVersion>2021.3.24f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\agro\Collectable.cs" />
     <Compile Include="Assets\agro\Materials\GlobalAchievements.cs" />
     <Compile Include="Assets\agro\Materials\MMtogglers.cs" />
     <Compile Include="Assets\agro\CollectableSpawner.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\ChargeControl.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\HealthBarControl.cs" />
+    <Compile Include="Assets\ClientScript.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\VRControl.cs" />
     <Compile Include="Assets\agro\vrCamera.cs" />
     <Compile Include="Assets\agro\Materials\CameraController.cs" />
@@ -80,17 +79,16 @@
     <Compile Include="Assets\agro\IcoMaterials\Markers\Clickable2.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Placer.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Charge.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\ChargeScript.cs" />
     <Compile Include="Assets\agro\Materials\CollectCube.cs" />
     <Compile Include="Assets\agro\Health Bar\ChargeStation.cs" />
     <Compile Include="Assets\agro\IcoMaterials\Markers\Markers.cs" />
     <Compile Include="Assets\agro\FollowCamera.cs" />
     <Compile Include="Assets\agro\PlayerMovement1.cs" />
+    <Compile Include="Assets\agro\IcoMaterials\Markers\AutoPilotControl.cs" />
     <Compile Include="Assets\agro\ground.cs" />
     <Compile Include="Assets\agro\ObjectDetector.cs" />
     <Compile Include="Assets\agro\MiniMapController.cs" />
-    <Compile Include="Assets\agro\IcoMaterials\Markers\AutoPilotControl.cs" />
-    <Compile Include="Assets\agro\IcoMaterials\Markers\ChargeControl.cs" />
-    <Compile Include="Assets\agro\IcoMaterials\Markers\ChargeScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

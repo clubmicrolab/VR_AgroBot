@@ -53,9 +53,6 @@
     <UnityVersion>2021.3.24f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.10\Runtime\ArmModels\ArmModel.cs" />
     <Compile Include="Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.10\Runtime\CameraOffset.cs" />
     <Compile Include="Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.10\Runtime\ArmModels\TransitionArmModel.cs" />

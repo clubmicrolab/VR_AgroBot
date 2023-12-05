@@ -53,9 +53,6 @@
     <UnityVersion>2021.3.24f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Library\PackageCache\com.unity.editorcoroutines@1.0.0\Editor\EditorCoroutine.cs" />
     <Compile Include="Library\PackageCache\com.unity.editorcoroutines@1.0.0\Editor\EditorWindowCoroutineExtension.cs" />
     <Compile Include="Library\PackageCache\com.unity.editorcoroutines@1.0.0\Editor\EditorWaitForSeconds.cs" />

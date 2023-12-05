@@ -401,6 +401,7 @@
 "Assets/agro/Switch.cs"
 "Assets/agro/Vr/OculusRift.cs"
 "Assets/agro/vrCamera.cs"
+"Assets/ClientScript.cs"
 "Assets/Map/ObjectMover.cs"
 "Assets/Map/ViewPoints.cs"
 -langversion:9.0

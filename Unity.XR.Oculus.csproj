@@ -53,9 +53,6 @@
     <UnityVersion>2021.3.24f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Library\PackageCache\com.unity.xr.oculus@3.3.0\Runtime\OculusSettings.cs" />
     <Compile Include="Library\PackageCache\com.unity.xr.oculus@3.3.0\Runtime\InputSystem\DeviceLayouts.cs" />
     <Compile Include="Library\PackageCache\com.unity.xr.oculus@3.3.0\Runtime\InputFocus.cs" />

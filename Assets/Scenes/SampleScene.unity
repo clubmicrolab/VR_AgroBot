@@ -2114,7 +2114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9744baf53045257409f21b0ad691ad14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Agrobot: {fileID: 460615686952423316}
+  Agrobot: {fileID: 483151422}
   markers:
   - {fileID: 4082843138133445110}
 --- !u!114 &483151427
@@ -2184,7 +2184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4ae986d3dea1743b084984906fa6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Agrobot: {fileID: 460615686952423316}
+  Agrobot: {fileID: 483151422}
   markers:
   - {fileID: 8724512693504840815}
   - {fileID: 1798027701}
@@ -2200,10 +2200,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 10
   m_Speed: 10
-  m_Acceleration: 20
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -18076,7 +18076,6 @@ GameObject:
   - component: {fileID: 2276282620096844362}
   - component: {fileID: 8706092466695806131}
   - component: {fileID: 8706092466695806130}
-  - component: {fileID: 8706092466695806128}
   - component: {fileID: 8706092466695806132}
   m_Layer: 0
   m_Name: Agrobot
@@ -18085,26 +18084,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8706092466695806128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8706092466695806127}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b17d865ed1732d849bec740e8cae5b36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _carTransform: {fileID: 460615686952423316}
-  _colliderFL: {fileID: 1824974706}
-  _colliderFR: {fileID: 637651630}
-  _colliderRL: {fileID: 1164046672}
-  _colliderRR: {fileID: 265320688}
-  _force: 10000
-  _maxAngle: 10
-  _brakeTorque: 20000
 --- !u!54 &8706092466695806130
 Rigidbody:
   m_ObjectHideFlags: 0
