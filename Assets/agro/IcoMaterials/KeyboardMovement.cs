@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,6 @@ public class KeyboardMovement : MonoBehaviour
     {
         Move();
 
-        // Rotate left or right based on A and D keys
         if (Input.GetKey(KeyCode.A))
         {
             RotateLeft();
@@ -31,10 +30,11 @@ public class KeyboardMovement : MonoBehaviour
 
     private void Move()
     {
-        float verticalInput = Input.GetAxis("Vertical");
-        float horizontalInput = Input.GetAxis("Horizontal");
+        bool isAccelerating = Input.GetKey(KeyCode.W);
 
-        float speed = verticalInput * _force;
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float speed = isAccelerating ? _force : 0f;
+
         float steering = horizontalInput * _maxAngle;
 
         _colliderFL.motorTorque = speed;
@@ -42,14 +42,13 @@ public class KeyboardMovement : MonoBehaviour
         _colliderRL.motorTorque = -steering;
         _colliderRR.motorTorque = steering;
 
-        // Apply brake torque to all wheels
         if (Input.GetKey(KeyCode.Space))
         {
             ApplyBrakeTorque(_brakeTorque);
         }
         else
         {
-            // Release brakes
+            // Eliberează frânele
             ApplyBrakeTorque(0f);
         }
 
@@ -58,7 +57,6 @@ public class KeyboardMovement : MonoBehaviour
 
     private void ApplyBrakeTorque(float torque)
     {
-        // Apply brake torque to all wheels
         _colliderFL.brakeTorque = torque;
         _colliderFR.brakeTorque = torque;
         _colliderRL.brakeTorque = torque;
@@ -67,20 +65,17 @@ public class KeyboardMovement : MonoBehaviour
 
     private void RotateLeft()
     {
-        // Rotate left logic here
         _carTransform.Rotate(Vector3.up, -_maxAngle * Time.deltaTime);
     }
 
     private void RotateRight()
     {
-        // Rotate right logic here
         _carTransform.Rotate(Vector3.up, _maxAngle * Time.deltaTime);
     }
 
     private void ApplySteering(float steeringInput)
     {
-        float maxSteerAngle = 30f; // Adjust the maximum steering angle as needed
-
+        float maxSteerAngle = 30f;
         float steerAngle = maxSteerAngle * steeringInput;
 
         _colliderFL.steerAngle = steerAngle;

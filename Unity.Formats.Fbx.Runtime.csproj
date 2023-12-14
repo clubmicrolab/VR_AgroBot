@@ -341,6 +341,9 @@
     <Reference Include="ReportGeneratorMerged">
       <HintPath>Library\PackageCache\com.unity.testtools.codecoverage@1.2.2\lib\ReportGenerator\ReportGeneratorMerged.dll</HintPath>
     </Reference>
+    <Reference Include="GenvidSDKCSharp">
+      <HintPath>Assets\Genvid\SDK\Plugins\GenvidSDKCSharp.dll</HintPath>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>T:\unity\2021.3.24f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
     </Reference>
